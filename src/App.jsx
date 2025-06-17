@@ -22,7 +22,6 @@ const movie_list = [
     Poster:
       "https://image.tmdb.org/t/p/original/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg",
   },
-  ,
   {
     Id: "105",
     Title: "Back to the Future",
@@ -54,19 +53,21 @@ const selected_movie_list = [
 ];
 function App() {
   const [movies, setMovies] = useState(movie_list);
-  const [selectedMovies, setselectedMovies] = useState(selected_movie_list);
+  const [selectedMovies, setSelectedMovies] = useState(selected_movie_list);
+  const [isOpen1, setIsOpen1] = useState(true);
+  const [isOpen2, setIsOpen2] = useState(true);
 
   return (
     <>
       <nav className="bg-primary text-white p-2">
         <div className="container">
-          <div className="row align-item-center">
-            <div className="col-4">Moovie App</div>
+          <div className="row align-items-center">
+            <div className="col-4">Movie App</div>
             <div className="col-4">
               <input
                 type="text"
                 className="form-control"
-                placeholder="film ara..."
+                placeholder="Film ara..."
               />
             </div>
             <div className="col-4 text-end">
@@ -80,60 +81,81 @@ function App() {
         <div className="row mt-2">
           <div className="col-md-9">
             <div className="movie-list">
-              <div className="row row-cols-1 row-cols-md-3 row-cols-xl-4 g-4">
-                {movies.map((movie) => (
-                  <div className="col mb-2" key={movie.Id}>
-                    <div className="card">
-                      <img
-                        src={movie.Poster}
-                        alt={movie.Title}
-                        className="card-img-top"
-                      />
-                      <div className="card-body">
-                        <h6 className="card-title">{movie.Title}</h6>
-                        <div>
-                          <i className="bi bi-calendar2-date me-1"></i>
-                          <span>{movie.Year}</span>
+              <button
+                className="btn btn-sm btn-outline-primary mb-2"
+                onClick={() => setIsOpen1((val) => !val)}
+              >
+                {isOpen1 ? (
+                  <i className="bi bi-chevron-up"></i>
+                ) : (
+                  <i className="bi bi-chevron-down"></i>
+                )}
+              </button>
+              {isOpen1 && (
+                <div className="row row-cols-1 row-cols-md-3 row-cols-xl-4 g-4">
+                  {movies.map((movie) => (
+                    <div className="col mb-2" key={movie.Id}>
+                      <div className="card">
+                        <img
+                          src={movie.Poster}
+                          alt={movie.Title}
+                          className="card-img-top"
+                        />
+                        <div className="card-body">
+                          <h6 className="card-title">{movie.Title}</h6>
+                          <div>
+                            <i className="bi bi-calendar2-date me-1"></i>
+                            <span>{movie.Year}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="col-md-3">
             <div className="movie-list">
-              {selectedMovies.map((movie) => (
-                <div className="card mb-2" key={movie.Id}>
-                  <div className="row">
-                    <div className="col-4">
-                      <img
-                        src={movie.Poster}
-                        alt={movie.Title}
-                        className="img-fluid rounded-start"
-                      />
-                    </div>
-                    <div className="col-8">
-                      <div className="card-body">
-                        <h6 className="card-title">{movie.Title}</h6>
-                        <div className="d-flex justify-content-between">
-                          <div>
+              <button
+                className="btn btn-sm btn-outline-primary mb-2"
+                onClick={() => setIsOpen2((val) => !val)}
+              >
+                {isOpen2 ? (
+                  <i className="bi bi-chevron-up"></i>
+                ) : (
+                  <i className="bi bi-chevron-down"></i>
+                )}
+              </button>
+              {isOpen2 &&
+                selectedMovies.map((movie) => (
+                  <div className="card mb-2" key={movie.Id}>
+                    <div className="row">
+                      <div className="col-4">
+                        <img
+                          src={movie.Poster}
+                          alt={movie.Title}
+                          className="img-fluid rounded-start"
+                        />
+                      </div>
+                      <div className="col-8">
+                        <div className="card-body">
+                          <h6 className="card-title">{movie.Title}</h6>
+                          <div className="d-flex justify-content-between">
                             <p>
                               <i className="bi bi-star-fill text-warning me-1"></i>
                               <span>{movie.rating}</span>
                             </p>
                             <p>
                               <i className="bi bi-hourglass text-warning me-1"></i>
-                              <span>{movie.duration}dk</span>
+                              <span>{movie.duration} dk</span>
                             </p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
